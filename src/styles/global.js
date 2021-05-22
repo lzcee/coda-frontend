@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
       url("../assets/fonts/OpenSans-SemiBold.woff") format("woff"),
       url("../assets/fonts/OpenSans-SemiBold.ttf") format("truetype");
     font-display: swap;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   @font-face {
@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-size: ${(props) => props.theme.fontSizes.mobile};
+    color: ${(props) => props.theme.colors.blue};
     font-family: ${(props) => props.theme.fonts[0]}, sans-serif;
   }
 
@@ -45,6 +46,14 @@ const GlobalStyle = createGlobalStyle`
     html {
       font-size: ${(props) => props.theme.fontSizes.desktop};
     }
+  }
+
+  body {
+    background-color: ${(props) => props.theme.colors.white};
+  }
+
+  a {
+    color: ${(props) => props.theme.colors.primaryPink};
   }
 `;
 
