@@ -43,6 +43,13 @@ export const Container = styled.div`
   }
 `;
 
+export const FullVerticalAlignment = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+`;
+
 export const Input = styled.input`
   width: 100%;
   border: 1px solid #9d9d9d;

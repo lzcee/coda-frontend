@@ -54,6 +54,11 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     color: ${(props) => props.theme.colors.primaryPink};
+    transition: opacity 350ms ease;
+    
+    &:hover {
+      opacity: 0.8;
+    }
   }
 `;
 
