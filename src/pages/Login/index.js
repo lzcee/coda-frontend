@@ -5,6 +5,7 @@ import Logo from "../../components/Logo";
 import { Button, Container, FullVerticalAlignment } from "../../styles/common";
 import {
   Divisor,
+  GoogleLogo,
   Illustration,
   Info,
   LeftWrapper,
@@ -29,7 +30,10 @@ const Login = () => {
             <Divisor>
               <p>ou</p>
             </Divisor>
-            <Button secondary>Entrar com o Google</Button>
+            <Button secondary>
+              <GoogleLogo />
+              Entrar com o Google
+            </Button>
             <Info>
               Ainda não tem uma conta?{" "}
               <Link to={{ pathname: REGISTER_PATH }}>Cadastre-se</Link>

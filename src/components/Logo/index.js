@@ -2,9 +2,9 @@ import { ReactComponent as LogoIcon } from "../../assets/icons/logo-icon.svg";
 import { ReactComponent as LogoText } from "../../assets/icons/logo-text.svg";
 import { LogoWrapper } from "./style";
 
-const Logo = ({ horizontal }) => {
+const Logo = ({ className, horizontal }) => {
   return (
-    <LogoWrapper horizontal={horizontal}>
+    <LogoWrapper className={className} horizontal={horizontal}>
       <LogoIcon />
       <LogoText />
     </LogoWrapper>
