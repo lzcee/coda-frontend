@@ -12,6 +12,7 @@ import {
   RightWrapper,
   Slogan,
 } from "./style";
+import UserForm from "../../components/UserForm";
 
 const Login = () => {
   return (
@@ -24,7 +25,7 @@ const Login = () => {
             <Illustration />
           </LeftWrapper>
           <RightWrapper>
-            <Button>Entrar</Button>
+            <UserForm type="login" />
             <Divisor>
               <p>ou</p>
             </Divisor>

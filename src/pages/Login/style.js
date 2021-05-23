@@ -26,7 +26,9 @@ export const Illustration = styled(IllustrationSvg)`
 `;
 
 export const Info = styled.p`
+  font-size: 12px;
   margin-top: 40px;
+  text-align: center;
 
   a {
     font-weight: 600;
@@ -40,7 +42,6 @@ export const LoginContent = styled.div`
   margin: 0 auto;
   box-sizing: border-box;
   padding: 26px 0 15px;
-  text-align: center;
 
   @media (min-width: 1024px) {
     max-width: initial;
@@ -52,9 +53,17 @@ export const LoginContent = styled.div`
   }
 `;
 
-export const RightWrapper = styled.div``;
+export const RightWrapper = styled.div`
+  @media (min-width: 1024px) {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 48px;
+    padding: 30px;
+  }
+`;
 
 export const Slogan = styled.h2`
+  text-align: center;
   font-size: 18px;
   margin: 22px 0 53px;
   color: ${(props) => props.theme.colors.blue};

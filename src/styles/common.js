@@ -58,6 +58,7 @@ export const Input = styled.input`
   padding: 12px;
   border-radius: 2px;
   box-sizing: border-box;
+  margin-bottom: 14px;
 `;
 
 export const Label = styled.label`
