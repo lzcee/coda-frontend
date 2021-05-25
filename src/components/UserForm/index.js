@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { REGISTER_PATH } from "../../config/routing/paths";
 
+import api from "../../config/services/api";
 import UserContext from "../../config/contexts/auth";
 
 import { Button, Input, Label } from "../../styles/common";
@@ -26,11 +27,11 @@ const UserForm = ({ type }) => {
   };
 
   const validatePassword = (password) => {
-    return password !== "" ? true : false;
+    return password.trim() !== "" ? true : false;
   };
 
   const validateName = (name) => {
-    return name !== "" ? true : false;
+    return name.trim() !== "" ? true : false;
   };
 
   const validateFields = () => {
@@ -71,6 +72,13 @@ const UserForm = ({ type }) => {
           password: user.password,
         };
         setError("");
+        try {
+          const response = await api.users.login(payload);
+          const data = response.data;
+          login(data.name, data.id, data.token, history);
+        } catch (e) {
+          setError("Ops! E-mail/senha incorretos, tente novamente!");
+        }
       } else if (type === "register") {
         const payload = {
           name: user.name,
@@ -78,6 +86,15 @@ const UserForm = ({ type }) => {
           password: user.password,
         };
         setError("");
+        try {
+          const response = await api.users.register(payload);
+          const data = response.data;
+          login(data.name, data.id, data.token, history);
+        } catch (e) {
+          setError(
+            "Ops! Não foi possível concluir o cadastro, tente novamente!"
+          );
+        }
       }
     }
   };
@@ -117,7 +134,7 @@ const UserForm = ({ type }) => {
         <>
           <Label>Confirmar Senha</Label>
           <Input
-            name="password"
+            name="confirmPassword"
             type="password"
             onChange={handleChange}
             value={user.confirmPassword}
