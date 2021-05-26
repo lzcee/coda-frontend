@@ -22,15 +22,15 @@ const UserProvider = ({ children }) => {
         }
   );
 
-  const login = (name, id, token, history) => {
-    localStorage.setItem("@App:name", name);
-    localStorage.setItem("@App:token", token);
-    localStorage.setItem("@App:id", id);
+  const login = (data, history) => {
+    localStorage.setItem("@App:name", data.name);
+    localStorage.setItem("@App:token", data.token);
+    localStorage.setItem("@App:id", data.id);
 
     setUser(() => ({
-      name,
-      id,
-      token,
+      name: data.name,
+      id: data.id,
+      token: data.token,
       auth: true,
     }));
 

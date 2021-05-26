@@ -4,13 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 import { REGISTER_PATH } from "../../config/routing/paths";
 
 import api from "../../config/services/api";
-import UserContext from "../../config/contexts/auth";
+import { UserContext } from "../../config/contexts/auth";
 
 import { Button, Input, Label } from "../../styles/common";
 import { ErrorMessage, Form, ForgotPassword } from "./style";
 
 const UserForm = ({ type }) => {
-  const login = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const history = useHistory();
 
   const [user, setUser] = useState({
@@ -75,7 +75,7 @@ const UserForm = ({ type }) => {
         try {
           const response = await api.users.login(payload);
           const data = response.data;
-          login(data.name, data.id, data.token, history);
+          login(data, history);
         } catch (e) {
           setError("Ops! E-mail/senha incorretos, tente novamente!");
         }
@@ -89,7 +89,7 @@ const UserForm = ({ type }) => {
         try {
           const response = await api.users.register(payload);
           const data = response.data;
-          login(data.name, data.id, data.token, history);
+          login(data, history);
         } catch (e) {
           setError(
             "Ops! Não foi possível concluir o cadastro, tente novamente!"
