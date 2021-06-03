@@ -6,31 +6,31 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(
     localStorage.getItem("@App:name") &&
-      localStorage.getItem("@App:token") &&
+      localStorage.getItem("@App:access_token") &&
       localStorage.getItem("@App:id")
       ? {
           name: localStorage.getItem("@App:name"),
           id: localStorage.getItem("@App:id"),
-          token: localStorage.getItem("@App:token"),
+          access_token: localStorage.getItem("@App:access_token"),
           auth: true,
         }
       : {
           name: "",
           id: "",
-          token: "",
+          access_token: "",
           auth: false,
         }
   );
 
   const login = (data, history) => {
     localStorage.setItem("@App:name", data.name);
-    localStorage.setItem("@App:token", data.token);
+    localStorage.setItem("@App:access_token", data.access_token);
     localStorage.setItem("@App:id", data.id);
 
     setUser(() => ({
       name: data.name,
       id: data.id,
-      token: data.token,
+      access_token: data.access_token,
       auth: true,
     }));
 
@@ -39,13 +39,13 @@ const UserProvider = ({ children }) => {
 
   const logout = (history) => {
     localStorage.removeItem("@App:name");
-    localStorage.removeItem("@App:token");
+    localStorage.removeItem("@App:access_token");
     localStorage.removeItem("@App:id");
 
     setUser(() => ({
       name: "",
       id: "",
-      token: "",
+      access_token: "",
       auth: false,
     }));
 

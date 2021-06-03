@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 
 import { Link, useHistory } from "react-router-dom";
-import { REGISTER_PATH } from "../../config/routing/paths";
+import { LOGIN_PATH, REGISTER_PATH } from "../../config/routing/paths";
 
 import api from "../../config/services/api";
 import { UserContext } from "../../config/contexts/auth";
@@ -75,7 +75,13 @@ const UserForm = ({ type }) => {
         try {
           const response = await api.users.login(payload);
           const data = response.data;
-          login(data, history);
+          try {
+            const profile = await api.users.findOne(data);
+            profile.data["access_token"] = data.access_token;
+            login(profile.data, history);
+          } catch (e) {
+            setError("Ops! Ocorreu um erro, tente novamente!");
+          }
         } catch (e) {
           setError("Ops! E-mail/senha incorretos, tente novamente!");
         }
@@ -87,9 +93,10 @@ const UserForm = ({ type }) => {
         };
         setError("");
         try {
-          const response = await api.users.register(payload);
-          const data = response.data;
-          login(data, history);
+          const response = await api.users.create(payload);
+          if (response.data) {
+            history.push({ pathname: LOGIN_PATH });
+          }
         } catch (e) {
           setError(
             "Ops! Não foi possível concluir o cadastro, tente novamente!"
