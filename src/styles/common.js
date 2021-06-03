@@ -68,3 +68,7 @@ export const Label = styled.label`
   color: ${(props) => props.theme.colors.blue};
   margin-bottom: 4px;
 `;
+
+export const Layout = styled.div`
+  margin-top: 89px;
+`;
