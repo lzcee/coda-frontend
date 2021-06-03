@@ -19,7 +19,7 @@ export const CloseModal = styled.button`
   border: none;
   padding: 0;
   margin-left: auto;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   cursor: pointer;
 
   svg {
@@ -38,8 +38,4 @@ export const ModalWrapper = styled.div`
   height: 100%;
   background-color: #19212582;
   z-index: 10;
-  @media (min-width: 768px) {
-    left: 260px;
-    width: calc(100% - 260px);
-  }
 `;
