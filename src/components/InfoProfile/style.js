@@ -6,5 +6,5 @@ export const AvatarWrapper = styled(Container)`
 `;
 
 export const InfosWrapper = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;

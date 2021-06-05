@@ -51,7 +51,7 @@ const Infos = ({
         </Info>
       </InfoWrap>
       <InfoWrap>
-        <Title>Linguagens de Programação</Title>
+        <Title>Tecnologias</Title>
         <Info hasInfo={programmingLanguages}>
           {programmingLanguages
             ? getProgrammingLanguages()

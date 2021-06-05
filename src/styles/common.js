@@ -43,6 +43,16 @@ export const Container = styled.div`
   }
 `;
 
+export const ErrorMessage = styled.p`
+  position: absolute;
+  font-size: 10px;
+  line-height: 12px;
+  width: 100%;
+  font-weight: 600;
+  color: #cc4b4b;
+  bottom: -12px;
+`;
+
 export const FullVerticalAlignment = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,7 +68,11 @@ export const Input = styled.input`
   padding: 12px;
   border-radius: 2px;
   box-sizing: border-box;
-  margin-bottom: 14px;
+`;
+
+export const InputWrapper = styled.div`
+  position: relative;
+  margin-bottom: 16px;
 `;
 
 export const Label = styled.label`

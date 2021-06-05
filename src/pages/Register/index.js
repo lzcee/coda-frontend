@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { LOGIN_PATH } from "../../config/routing/paths";
 
 import Logo from "../../components/Logo";
 import { Button, Container, FullVerticalAlignment } from "../../styles/common";
@@ -37,7 +36,7 @@ const Register = () => {
               Entrar com o Google
             </Button>
             <Info>
-              Já tem uma conta? <Link to={{ pathname: LOGIN_PATH }}>Entre</Link>
+              Já tem uma conta? <Link to="/">Entre</Link>
             </Info>
           </RightWrapper>
         </LoginContent>

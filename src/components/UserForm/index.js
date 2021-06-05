@@ -1,157 +1,84 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-import { Link, useHistory } from "react-router-dom";
-import { LOGIN_PATH, REGISTER_PATH } from "../../config/routing/paths";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/auth";
 
-import api from "../../config/services/api";
-import { UserContext } from "../../config/contexts/auth";
-
-import { Button, Input, Label } from "../../styles/common";
-import { ErrorMessage, Form, ForgotPassword } from "./style";
+import {
+  Button,
+  Input,
+  Label,
+  InputWrapper,
+  ErrorMessage,
+} from "../../styles/common";
+import { Form, ForgotPassword } from "./style";
 
 const UserForm = ({ type }) => {
-  const { login } = useContext(UserContext);
-  const history = useHistory();
+  const { signIn } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [error, setError] = useState(null);
 
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [error, setError] = useState("");
-
-  const validateEmail = (email) => {
-    var regex = /^[\w-s.]+@([\w-]+.)+[\w-]{2,4}$/;
-    return regex.test(String(email).toLowerCase());
-  };
-
-  const validatePassword = (password) => {
-    return password.trim() !== "" ? true : false;
-  };
-
-  const validateName = (name) => {
-    return name.trim() !== "" ? true : false;
-  };
-
-  const validateFields = () => {
-    if (
-      type === "register" &&
-      validateName(user.name) &&
-      validateEmail(user.email) &&
-      validatePassword(user.password)
-    ) {
-      setError("");
-      return true;
-    } else if (
-      type === "login" &&
-      validateEmail(user.email) &&
-      validatePassword(user.password)
-    ) {
-      setError("");
-      return true;
-    } else {
-      setError("Ops! Verifique os campos antes de enviar!");
-      return false;
-    }
-  };
-
-  const handleChange = (event) => {
-    setUser({
-      ...user,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleClick = async (event) => {
-    event.preventDefault();
-    if (validateFields()) {
-      if (type === "login") {
-        const payload = {
-          email: user.email,
-          password: user.password,
-        };
-        setError("");
+  async function onSubmit(data) {
+    switch (type) {
+      case "register":
+        break;
+      case "login":
         try {
-          const response = await api.users.login(payload);
-          const data = response.data;
-          try {
-            const profile = await api.users.findOne(data);
-            profile.data["access_token"] = data.access_token;
-            login(profile.data, history);
-          } catch (e) {
-            setError("Ops! Ocorreu um erro, tente novamente!");
-          }
-        } catch (e) {
-          setError("Ops! E-mail/senha incorretos, tente novamente!");
+          await signIn(data);
+        } catch (error) {
+          setError("Ocorreu um erro. Tente novamente!");
         }
-      } else if (type === "register") {
-        const payload = {
-          name: user.name,
-          email: user.email,
-          password: user.password,
-        };
-        setError("");
-        try {
-          const response = await api.users.create(payload);
-          if (response.data) {
-            history.push({ pathname: LOGIN_PATH });
-          }
-        } catch (e) {
-          setError(
-            "Ops! Não foi possível concluir o cadastro, tente novamente!"
-          );
-        }
-      }
+        break;
+      default:
+        break;
     }
-  };
+  }
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       {type === "register" && (
-        <>
+        <InputWrapper>
           <Label>Nome</Label>
-          <Input
-            name="name"
-            type="text"
-            onChange={handleChange}
-            value={user.name}
-          />
-        </>
+          <Input type="text" {...register("name", { required: true })} />
+          {errors.name && <ErrorMessage>*Campo obrigatório</ErrorMessage>}
+        </InputWrapper>
       )}
-      <Label>E-mail</Label>
-      <Input
-        name="email"
-        type="email"
-        onChange={handleChange}
-        value={user.email}
-      />
-      <Label>Senha</Label>
-      <Input
-        name="password"
-        type="password"
-        onChange={handleChange}
-        value={user.password}
-      />
+      <InputWrapper>
+        <Label>E-mail</Label>
+        <Input
+          type="email"
+          {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+        />
+        {errors.email && <ErrorMessage>*Campo obrigatório</ErrorMessage>}
+      </InputWrapper>
+      <InputWrapper>
+        <Label>Senha</Label>
+        <Input type="password" {...register("password", { required: true })} />
+        {errors.password && <ErrorMessage>*Campo obrigatório</ErrorMessage>}
+      </InputWrapper>
       {type === "login" && (
         <ForgotPassword>
-          <Link to={{ pathname: REGISTER_PATH }}>Esqueceu a senha?</Link>
+          <Link to="/">Esqueceu a senha?</Link>
         </ForgotPassword>
       )}
       {type === "register" && (
-        <>
+        <InputWrapper>
           <Label>Confirmar Senha</Label>
           <Input
-            name="confirmPassword"
             type="password"
-            onChange={handleChange}
-            value={user.confirmPassword}
+            {...register("confirmPassword", { required: true })}
           />
-        </>
+          {errors.confirmPassword && (
+            <ErrorMessage>*Campo obrigatório</ErrorMessage>
+          )}
+        </InputWrapper>
       )}
-      <Button type="submit" onClick={handleClick}>
-        {type === "login" ? "Entrar" : "Cadastrar"}
-      </Button>
-      <ErrorMessage>{error}</ErrorMessage>
+      <Button type="submit">{type === "login" ? "Entrar" : "Cadastrar"}</Button>
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </Form>
   );
 };

@@ -4,6 +4,7 @@ export const Content = styled.div`
   position: absolute;
   padding: 30px;
   box-sizing: border-box;
+  max-height: 100vh;
   width: 80%;
   max-width: 600px;
   top: 50%;
@@ -11,6 +12,7 @@ export const Content = styled.div`
   transform: translate(-50%, -50%);
   background-color: #ffffff;
   border-radius: 24px;
+  overflow: auto;
 `;
 
 export const CloseModal = styled.button`
@@ -37,5 +39,5 @@ export const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: #19212582;
-  z-index: 10;
+  z-index: 50;
 `;

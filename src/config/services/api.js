@@ -9,9 +9,13 @@ const users = {
     return api.post("/users/", payload);
   },
   findOne(payload) {
-    console.log(payload);
     return api.get(`/users/${payload.id}`, {
       headers: { Authorization: `Bearer ${payload.access_token}` },
+    });
+  },
+  update(payload) {
+    return api.patch(`/users/${payload.infos.id}`, payload.user, {
+      headers: { Authorization: `Bearer ${payload.infos.access_token}` },
     });
   },
   login(payload) {
