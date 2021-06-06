@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 
@@ -9,9 +9,10 @@ const AuthRoutes = () => {
         <Route path="/" exact>
           <Login />
         </Route>
-        <Route path="/cadastrar">
+        <Route path="/cadastro" exact>
           <Register />
         </Route>
+        <Route path="*" render={() => <Redirect to="/" />}></Route>
       </Switch>
     </BrowserRouter>
   );

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/auth";
+import { users } from "../../services/api";
 
 import {
   Button,
@@ -18,13 +19,22 @@ const UserForm = ({ type }) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
   const [error, setError] = useState(null);
 
+  const history = useHistory();
+
   async function onSubmit(data) {
     switch (type) {
       case "register":
+        try {
+          await users.create(data);
+          history.push("/");
+        } catch (error) {
+          setError("Ocorreu um erro. Tente novamente!");
+        }
         break;
       case "login":
         try {
@@ -70,10 +80,15 @@ const UserForm = ({ type }) => {
           <Label>Confirmar Senha</Label>
           <Input
             type="password"
-            {...register("confirmPassword", { required: true })}
+            {...register("confirmPassword", {
+              required: true,
+              validate: (value) => value === watch("password"),
+            })}
           />
           {errors.confirmPassword && (
-            <ErrorMessage>*Campo obrigatório</ErrorMessage>
+            <ErrorMessage>
+              *Campo obrigatório {errors.confirmPassword.message}
+            </ErrorMessage>
           )}
         </InputWrapper>
       )}

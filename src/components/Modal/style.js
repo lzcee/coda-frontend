@@ -1,33 +1,25 @@
 import styled from "styled-components";
 
-export const Content = styled.div`
-  position: absolute;
-  padding: 30px;
-  box-sizing: border-box;
-  max-height: 100vh;
-  width: 80%;
-  max-width: 600px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #ffffff;
-  border-radius: 24px;
-  overflow: auto;
-`;
-
 export const CloseModal = styled.button`
   display: block;
   background-color: transparent;
   border: none;
   padding: 0;
-  margin-left: auto;
-  margin-bottom: 20px;
+  margin: 24px 0 20px auto;
   cursor: pointer;
 
   svg {
     width: 15px;
     height: 15px;
   }
+`;
+
+export const Content = styled.div`
+  position: relative;
+  overflow: auto;
+  max-height: calc(100vh - 61px);
+  box-sizing: border-box;
+  padding-bottom: 32px;
 `;
 
 export const ModalWrapper = styled.div`
@@ -38,6 +30,6 @@ export const ModalWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #19212582;
+  background-color: #ffffff;
   z-index: 50;
 `;

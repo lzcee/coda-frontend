@@ -1,141 +1,114 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { users } from "../../services/api";
+
 import { Title } from "./style";
-import { Button, Input, Label } from "../../styles/common";
+import { Button, Input, InputWrapper, Label } from "../../styles/common";
+import { useAuth } from "../../contexts/auth";
 
-const UpdateProfile = ({ setModal }) => {
-  // const { user, setUser } = useContext(UserContext);
-  // const [profile, setProfile] = useState({ ...user });
+const Updateuser = ({ setModal }) => {
+  const { user } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // const [error, setError] = useState("");
-  // const handleChange = (event) => {
-  //   setProfile({
-  //     ...profile,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
-  // const pushSelect = (event) => {
-  //   const select = profile[event.target.name];
-  //   setProfile({
-  //     ...profile,
-  //     [event.target.name]: [select, event.target.value],
-  //   });
-  // };
-  // const validateEmail = (email) => {
-  //   var regex = /^[\w-s.]+@([\w-]+.)+[\w-]{2,4}$/;
-  //   return regex.test(String(email).toLowerCase());
-  // };
+  async function onSubmit(data) {
+    let updatedUser = user;
+    updatedUser = { ...updatedUser, ...data };
 
-  // const validateName = (name) => {
-  //   return name.trim() !== "" ? true : false;
-  // };
+    try {
+      await users.update(updatedUser);
+    } catch (error) {
+      setError("Ocorreu um erro. Tente novamente!");
+    }
+  }
 
-  // const validateFields = () => {
-  //   if (validateName(user.name) && validateEmail(user.email)) {
-  //     setError("");
-  //     return true;
-  //   } else {
-  //     setError("Ops! Verifique os campos antes de enviar!");
-  //     return false;
-  //   }
-  // };
-
-  // const handleClick = async (event) => {
-  //   event.preventDefault();
-  //   if (validateFields()) {
-  //     setError("");
-  //     try {
-  //       const { access_token, id, auth, ...updateInfos } = user;
-  //       const payload = {
-  //         infos: user,
-  //         user: updateInfos,
-  //       };
-  //       const response = await api.users.update(payload);
-  //       setUser({ ...user, ...response.data });
-  //       setModal(false);
-  //     } catch (e) {
-  //       setError(
-  //         "Ops! Não foi possível concluir a atualização, tente novamente!"
-  //       );
-  //     }
-  //   }
-  // };
+  const [error, setError] = useState("");
 
   return (
     <div>
       <Title>Editar Perfil</Title>
-      <Label>Nome</Label>
-      {/* <Input
-        name="name"
-        type="text"
-        onChange={handleChange}
-        value={profile.name}
-      />
-      <Label>E-mail</Label>
-      <Input
-        name="email"
-        type="email"
-        onChange={handleChange}
-        value={profile.email}
-      />
-      <Label>Sobre</Label>
-      <Input
-        name="biography"
-        type="text"
-        onChange={handleChange}
-        value={profile.biography ? profile.biography : ""}
-      />
-      <Label>Portfólio</Label>
-      <Input
-        name="portfolio"
-        type="link"
-        onChange={handleChange}
-        value={profile.portfolio ? profile.portfolio : ""}
-      />
-      <Label>Área</Label>
-      <Input
-        as="select"
-        name="area"
-        onChange={handleChange}
-        value={profile.area ? profile.area : ""}
-      >
-        <option value="">Selecione uma opção</option>
-        <option value="backend">Back-end</option>
-        <option value="frontend">Front-end</option>
-        <option value="data">Dados</option>
-        <option value="ui_ux">UI/UX Design</option>
-        <option value="other">Outra</option>
-      </Input>
-      <Label>Tecnologias</Label>
-      <Input
-        type="text"
-        value={profile.programmingLanguages ? profile.programmingLanguages : ""}
-        readOnly
-      />
-      <Input as="select" name="programmingLanguages" onChange={pushSelect}>
-        <option value="">Selecione uma opção</option>
-        <option value="java">Java</option>
-        <option value="javascript">Javascript</option>
-        <option value="php">PHP</option>
-        <option value="react">React</option>
-        <option value="angular">Angular</option>
-        <option value="flutter">Flutter</option>
-        <option value="android">Android</option>
-        <option value="swift">Swift</option>
-        <option value="hmtl">HTML</option>
-        <option value="other">Outra</option>
-      </Input>
-      <Label>Softwares</Label>
-      <Input
-        type="text"
-        value={profile.softwares ? profile.softwares : ""}
-        onChange={handleChange}
-      />
-      {error}
-      <Button type="submit" onClick={handleClick}>
-        Alterar
-      </Button> */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <InputWrapper>
+          <Label>Nome</Label>
+          <Input
+            type="text"
+            defaultValue={user.name}
+            {...register("name", { required: true, maxLength: 80 })}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>E-mail</Label>
+          <Input
+            type="email"
+            defaultValue={user.email}
+            {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>Sobre</Label>
+          <Input
+            as="textarea"
+            defaultValue={user.biography}
+            {...register("biography", {})}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>Celular</Label>
+          <Input
+            type="tel"
+            defaultValue={user.phone}
+            {...register("phone", { maxLength: 12 })}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>Portfólio</Label>
+          <Input
+            type="url"
+            defaultValue={user.portfolio}
+            {...register("portfolio", {})}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <Label>Área</Label>
+          <Input as="select" {...register} defaultValue={user.area}>
+            <option value="">Selecione uma opção</option>
+            <option value="backend">Back-end</option>
+            <option value="frontend">Front-end</option>
+            <option value="data">Dados</option>
+            <option value="ui_ux">UI/UX Design</option>
+            <option value="other">Outra</option>
+          </Input>
+        </InputWrapper>
+        <InputWrapper>
+          <Label>Tecnologias</Label>
+          <Input
+            type="checkbox"
+            id="java"
+            value="java"
+            {...register("programmingLanguages")}
+          />
+          <label htmlFor="java">Java</label>
+          <Input
+            type="checkbox"
+            id="javascript"
+            value="javascript"
+            {...register("programmingLanguages")}
+          />
+          <label htmlFor="javascript">Javascript</label>
+        </InputWrapper>
+        <InputWrapper>
+          <Label>Softwares</Label>
+          <Input type="checkbox" {...register("softwares", {})} />
+        </InputWrapper>
+        {error}
+        <Button type="submit">Alterar</Button>
+      </form>
     </div>
   );
 };
 
-export default UpdateProfile;
+export default Updateuser;
