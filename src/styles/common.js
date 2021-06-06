@@ -68,6 +68,13 @@ export const Input = styled.input`
   padding: 12px;
   border-radius: 2px;
   box-sizing: border-box;
+
+  &[type="checkbox"] {
+    width: initial;
+    vertical-align: bottom;
+    display: inline-block;
+    margin-right: 6px;
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -85,4 +92,15 @@ export const Label = styled.label`
 
 export const Layout = styled.div`
   margin-top: 89px;
+`;
+
+export const Tag = styled.span`
+  background-color: ${(props) => props.theme.colors.blue};
+  color: #ffffff;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 18px;
+  margin-right: 6px;
+  font-size: 12px;
+  line-height: 12px;
 `;

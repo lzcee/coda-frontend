@@ -39,9 +39,15 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   }
 
+  function updateUser(user) {
+    setUser(user);
+
+    localStorage.setItem("@CodAuth:user", JSON.stringify(user));
+  }
+
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, signIn, signOut, loading }}
+      value={{ signed: !!user, user, updateUser, signIn, signOut, loading }}
     >
       {children}
     </AuthContext.Provider>

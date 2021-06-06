@@ -3,30 +3,48 @@ import { useForm } from "react-hook-form";
 
 import { users } from "../../services/api";
 
-import { Title } from "./style";
+import { CheckBoxWrapper, Title } from "./style";
 import { Button, Input, InputWrapper, Label } from "../../styles/common";
 import { useAuth } from "../../contexts/auth";
 
-const Updateuser = ({ setModal }) => {
-  const { user } = useAuth();
+const UpdateProfile = ({ setModal }) => {
+  const { user, updateUser } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [error, setError] = useState("");
+
+  const programmingLanguages = [
+    "Java",
+    "Javascript",
+    "HTML",
+    "CSS",
+    "React",
+    "Angular",
+    "Vue.js",
+    "Node.js",
+    "Flutter",
+    "Android",
+    "Swift",
+    "Outras",
+  ];
+
+  const softwares = ["Figma", "Adobe XD", "Adobe Photoshop", "Jira", "Outros"];
 
   async function onSubmit(data) {
     let updatedUser = user;
     updatedUser = { ...updatedUser, ...data };
-
+    setError("");
     try {
-      await users.update(updatedUser);
+      const response = await users.update(updatedUser);
+      updateUser(response);
+      setModal(false);
     } catch (error) {
       setError("Ocorreu um erro. Tente novamente!");
     }
   }
-
-  const [error, setError] = useState("");
 
   return (
     <div>
@@ -74,35 +92,48 @@ const Updateuser = ({ setModal }) => {
         </InputWrapper>
         <InputWrapper>
           <Label>Área</Label>
-          <Input as="select" {...register} defaultValue={user.area}>
+          <Input as="select" {...register("area")} defaultValue={user.area}>
             <option value="">Selecione uma opção</option>
-            <option value="backend">Back-end</option>
-            <option value="frontend">Front-end</option>
-            <option value="data">Dados</option>
-            <option value="ui_ux">UI/UX Design</option>
-            <option value="other">Outra</option>
+            <option value="Back-end">Back-end</option>
+            <option value="Front-end">Front-end</option>
+            <option value="Dados">Dados</option>
+            <option value="UI/UX Desig">UI/UX Design</option>
+            <option value="Outra">Outra</option>
           </Input>
         </InputWrapper>
         <InputWrapper>
           <Label>Tecnologias</Label>
-          <Input
-            type="checkbox"
-            id="java"
-            value="java"
-            {...register("programmingLanguages")}
-          />
-          <label htmlFor="java">Java</label>
-          <Input
-            type="checkbox"
-            id="javascript"
-            value="javascript"
-            {...register("programmingLanguages")}
-          />
-          <label htmlFor="javascript">Javascript</label>
+          {programmingLanguages.map((language) => (
+            <CheckBoxWrapper key={language}>
+              <Input
+                type="checkbox"
+                id={language.replace(/\s/g, "").toLowerCase()}
+                value={language}
+                {...register("programmingLanguages")}
+                defaultChecked={user.programmingLanguages?.includes(language)}
+              />{" "}
+              <label htmlFor={language.replace(/\s/g, "").toLowerCase()}>
+                {language}
+              </label>
+            </CheckBoxWrapper>
+          ))}
         </InputWrapper>
         <InputWrapper>
           <Label>Softwares</Label>
-          <Input type="checkbox" {...register("softwares", {})} />
+          {softwares.map((software) => (
+            <CheckBoxWrapper key={software}>
+              <Input
+                type="checkbox"
+                id={software.replace(/\s/g, "").toLowerCase()}
+                value={software}
+                {...register("softwares")}
+                defaultChecked={user.softwares?.includes(software)}
+              />{" "}
+              <label htmlFor={software.replace(/\s/g, "").toLowerCase()}>
+                {software}
+              </label>
+            </CheckBoxWrapper>
+          ))}
         </InputWrapper>
         {error}
         <Button type="submit">Alterar</Button>
@@ -111,4 +142,4 @@ const Updateuser = ({ setModal }) => {
   );
 };
 
-export default Updateuser;
+export default UpdateProfile;

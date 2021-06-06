@@ -1,3 +1,4 @@
+import { Tag } from "../../../styles/common";
 import { Info, InfoWrap, Title } from "./style";
 
 const Infos = ({
@@ -11,11 +12,11 @@ const Infos = ({
 }) => {
   const getProgrammingLanguages = () =>
     programmingLanguages.map((language) => {
-      return <span>{language}</span>;
+      return <Tag key={language}>{language}</Tag>;
     });
   const getSoftwares = () =>
     softwares.map((software) => {
-      return <span>{software}</span>;
+      return <Tag key={software}>{software}</Tag>;
     });
 
   return (
@@ -53,7 +54,7 @@ const Infos = ({
       <InfoWrap>
         <Title>Tecnologias</Title>
         <Info hasInfo={programmingLanguages}>
-          {programmingLanguages
+          {programmingLanguages.length > 0
             ? getProgrammingLanguages()
             : "Mostre as linguagens que você trabalha"}
         </Info>
@@ -61,7 +62,9 @@ const Infos = ({
       <InfoWrap>
         <Title>Softwares</Title>
         <Info hasInfo={softwares}>
-          {softwares ? getSoftwares() : "Mostre os softwares que você utiliza"}
+          {softwares.length > 0
+            ? getSoftwares()
+            : "Mostre os softwares que você utiliza"}
         </Info>
       </InfoWrap>
     </>
