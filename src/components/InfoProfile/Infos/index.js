@@ -4,6 +4,7 @@ import { Info, InfoWrap, Title } from "./style";
 const Infos = ({
   name,
   email,
+  phone,
   biography,
   portfolio,
   area,
@@ -43,6 +44,12 @@ const Infos = ({
           ) : (
             "Adicione um link para seu portfólio"
           )}
+        </Info>
+      </InfoWrap>
+      <InfoWrap>
+        <Title>Celular</Title>
+        <Info hasInfo={phone}>
+          {phone ? phone : "Insira seu número para contato"}
         </Info>
       </InfoWrap>
       <InfoWrap>

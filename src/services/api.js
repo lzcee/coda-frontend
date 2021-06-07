@@ -25,6 +25,16 @@ export const users = {
 
     return response.data;
   },
+  async search(params = "") {
+    params = new URLSearchParams(params).toString();
+    const options = {
+      method: "GET",
+      url: `/users/${params}`,
+    };
+    const response = await api(options);
+
+    return response.data;
+  },
 };
 
 export default api;
