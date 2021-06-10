@@ -29,7 +29,7 @@ export const users = {
     params = new URLSearchParams(params).toString();
     const options = {
       method: "GET",
-      url: `/users/${params}`,
+      url: `/users/?${params}`,
     };
     const response = await api(options);
 

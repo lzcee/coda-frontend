@@ -10,6 +10,7 @@ export const CardWrapper = styled.div`
   margin-bottom: 45px;
   color: ${(props) => props.theme.colors.blue};
   display: flex;
+  box-shadow: 0px 0px 20px rgb(0 0 0 / 8%);
 `;
 
 export const Img = styled.img`
