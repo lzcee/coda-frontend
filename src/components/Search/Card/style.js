@@ -18,18 +18,22 @@ export const Img = styled.img`
   height: 43px;
   border-radius: 50%;
   margin-right: 20px;
+  pointer-events: none;
 `;
 
 export const Name = styled.h3`
   font-size: 16px;
   margin-bottom: 10px;
+  pointer-events: none;
 `;
 
 export const Description = styled.p`
   font-size: 14px;
   margin-bottom: 20px;
+  pointer-events: none;
 `;
 
 export const Area = styled(Tag)`
   background-color: ${(props) => props.theme.colors.primaryPink};
+  pointer-events: none;
 `;

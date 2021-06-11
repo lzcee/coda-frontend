@@ -35,6 +35,15 @@ export const users = {
 
     return response.data;
   },
+  async findOne(userId) {
+    const options = {
+      method: "GET",
+      url: `/users/${userId}`,
+    };
+    const response = await api(options);
+
+    return response.data;
+  },
 };
 
 export default api;

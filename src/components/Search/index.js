@@ -11,6 +11,7 @@ import {
 } from "../../styles/common";
 import Modal from "../Modal";
 import Card from "./Card";
+import Profile from "./Profile";
 import { Filter, FilterWrap, FlexWrap, SearchButton, Title } from "./style";
 
 import { ReactComponent as FilterIcon } from "../../assets/icons/filter.svg";
@@ -22,6 +23,7 @@ import { Autocomplete } from "@material-ui/lab";
 const Search = () => {
   const [response, setResponse] = useState([]);
   const [profile, setProfile] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [filter, setFilter] = useState(false);
   const [query, setQuery] = useState({
     name: "",
@@ -29,10 +31,9 @@ const Search = () => {
     programmingLanguages: null,
     softwares: null,
   });
-  console.log(query);
 
   const area = ["Back-end", "Front-end", "Dados", "UI/UX Design", "Outra"];
-
+  console.log(selectedUser);
   const programmingLanguages = [
     "Java",
     "Javascript",
@@ -157,14 +158,23 @@ const Search = () => {
         )}
       </Container>
       {response.map((user) => (
-        <Card key={user.id} {...user} setModal={setProfile} />
+        <Card
+          key={user.id}
+          {...user}
+          setModal={setProfile}
+          setSelectedUser={setSelectedUser}
+        />
       ))}
       {response.length === 0 && (
         <Container>
           <p>Não encontramos resultados para a sua busca.</p>
         </Container>
       )}
-      {profile && <Modal open={setProfile}>teste</Modal>}
+      {profile && (
+        <Modal open={setProfile}>
+          <Profile userId={selectedUser} />
+        </Modal>
+      )}
     </Layout>
   );
 };

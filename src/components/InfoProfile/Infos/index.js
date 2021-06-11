@@ -61,7 +61,7 @@ const Infos = ({
       <InfoWrap>
         <Title>Tecnologias</Title>
         <Info hasInfo={programmingLanguages}>
-          {programmingLanguages.length > 0
+          {programmingLanguages && programmingLanguages.length > 0
             ? getProgrammingLanguages()
             : "Mostre as linguagens que você trabalha"}
         </Info>
@@ -69,7 +69,7 @@ const Infos = ({
       <InfoWrap>
         <Title>Softwares</Title>
         <Info hasInfo={softwares}>
-          {softwares.length > 0
+          {softwares && softwares.length > 0
             ? getSoftwares()
             : "Mostre os softwares que você utiliza"}
         </Info>

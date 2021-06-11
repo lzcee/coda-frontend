@@ -1,11 +1,19 @@
 import { Area, CardWrapper, Description, Img, Name } from "./style";
 import defaultAvatar from "../../../assets/icons/profile.svg";
 
-const Card = ({ id, name, biography, area, photo, setModal }) => {
+const Card = ({
+  id,
+  name,
+  biography,
+  area,
+  photo,
+  setModal,
+  setSelectedUser,
+}) => {
   function handleClick() {
-    setModal({ id, name, biography, area, photo });
+    setModal(true);
+    setSelectedUser(id);
   }
-
   return (
     <CardWrapper onClick={handleClick}>
       <Img src={photo ? photo : defaultAvatar} />
