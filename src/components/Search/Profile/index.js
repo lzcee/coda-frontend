@@ -37,7 +37,7 @@ const Profile = ({ userId }) => {
         <>
           <InfoWrap style={{ textAlign: "center" }}>
             <Img
-              style={{ marginRight: 0 }}
+              style={{ marginRight: 0, width: "80px", height: "80px" }}
               src={
                 user.photo
                   ? `http://localhost:3000/users/img/${user.photo}`

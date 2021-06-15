@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const ImageWrapper = styled.div`
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   margin: 0 auto 16px;
 `;
 
@@ -20,8 +20,8 @@ export const InputFile = styled.input`
 
 export const Edit = styled.button`
   position: absolute;
-  bottom: -7px;
-  right: -14px;
+  bottom: 0;
+  right: -7px;
   padding: 0;
   display: flex;
   align-items: center;

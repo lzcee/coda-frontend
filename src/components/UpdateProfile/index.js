@@ -34,6 +34,16 @@ const UpdateProfile = ({ setModal }) => {
   const softwares = ["Figma", "Adobe XD", "Adobe Photoshop", "Jira", "Outros"];
 
   async function onSubmit(data) {
+    if (typeof data.softwares === "string") {
+      let softwaresList = [];
+      softwaresList.push(data.softwares);
+      data.softwares = softwaresList;
+    }
+    if (typeof data.programmingLanguages === "string") {
+      let programmingLanguagesList = [];
+      programmingLanguagesList.push(data.programmingLanguages);
+      data.programmingLanguages = programmingLanguagesList;
+    }
     let updatedUser = user;
     updatedUser = { ...updatedUser, ...data };
     setError("");
