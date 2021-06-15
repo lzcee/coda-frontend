@@ -44,6 +44,16 @@ export const users = {
 
     return response.data;
   },
+  async upload(file, userId) {
+    const options = {
+      method: "POST",
+      data: file,
+      url: `/users/upload/${userId}`,
+    };
+    const response = await api(options);
+
+    return response.data;
+  },
 };
 
 export default api;

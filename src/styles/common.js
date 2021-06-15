@@ -100,7 +100,7 @@ export const Tag = styled.span`
   display: inline-block;
   padding: 6px 12px;
   border-radius: 18px;
-  margin-right: 6px;
+  margin: 0 6px 6px 0;
   font-size: 12px;
   line-height: 12px;
 `;

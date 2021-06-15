@@ -16,7 +16,9 @@ const Card = ({
   }
   return (
     <CardWrapper onClick={handleClick}>
-      <Img src={photo ? photo : defaultAvatar} />
+      <Img
+        src={photo ? `http://localhost:3000/users/img/${photo}` : defaultAvatar}
+      />
       <div>
         <Name>{name}</Name>
         {biography && <Description>{biography}</Description>}

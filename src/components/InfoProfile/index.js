@@ -19,7 +19,7 @@ const InfoProfile = () => {
   return (
     <Layout>
       <AvatarWrapper>
-        <Avatar photo={user.photo} />
+        <Avatar photo={user.photo} userId={user.id} />
       </AvatarWrapper>
       <Container>
         <InfosWrapper>

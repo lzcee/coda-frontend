@@ -6,8 +6,9 @@ import { ReactComponent as EditIcon } from "../../../assets/icons/edit.svg";
 import defaultAvatar from "../../../assets/icons/profile.svg";
 import Modal from "../../Modal";
 import { Button } from "../../../styles/common";
+import { users } from "../../../services/api";
 
-const Avatar = ({ photo }) => {
+const Avatar = ({ photo, userId }) => {
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -19,21 +20,26 @@ const Avatar = ({ photo }) => {
     setFile(event.target.files[0]);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     const formData = new FormData();
 
-    formData.append("myFile", file, file.name);
+    formData.append("file", file, file.name);
     console.log(file);
 
     setModal(false);
 
-    // axios.post("api/uploadfile", formData);
+    await users.upload(formData, userId);
   };
 
   return (
     <>
       <ImageWrapper>
-        <Img src={photo ? photo : defaultAvatar} alt="Foto de Perfil" />
+        <Img
+          src={
+            photo ? `http://localhost:3000/users/img/${photo}` : defaultAvatar
+          }
+          alt="Foto de Perfil"
+        />
         <Edit onClick={openModal}>
           <EditIcon />
         </Edit>

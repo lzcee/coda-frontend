@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { users } from "../../../services/api";
 import { Tag } from "../../../styles/common";
 import { Info, InfoWrap, Title } from "../../InfoProfile/Infos/style";
+import { Img } from "../Card/style";
+import defaultAvatar from "../../../assets/icons/profile.svg";
 
 const Profile = ({ userId }) => {
   const [user, setUser] = useState(null);
@@ -18,7 +20,7 @@ const Profile = ({ userId }) => {
     }
 
     fetchData();
-  }, []);
+  }, [userId]);
 
   const getProgrammingLanguages = () =>
     user.programmingLanguages.map((language) => {
@@ -33,13 +35,25 @@ const Profile = ({ userId }) => {
     <div>
       {user && (
         <>
+          <InfoWrap style={{ textAlign: "center" }}>
+            <Img
+              style={{ marginRight: 0 }}
+              src={
+                user.photo
+                  ? `http://localhost:3000/users/img/${user.photo}`
+                  : defaultAvatar
+              }
+            />
+          </InfoWrap>
           <InfoWrap>
             <Title>Nome</Title>
             <Info hasInfo={user.name}>{user.name}</Info>
           </InfoWrap>
           <InfoWrap>
             <Title>E-mail</Title>
-            <Info hasInfo={user.email}>{user.email}</Info>
+            <Info hasInfo={user.email}>
+              <a href={`mailto:${user.email}`}>{user.email}</a>
+            </Info>
           </InfoWrap>
           {user.biography && (
             <InfoWrap>
@@ -57,8 +71,16 @@ const Profile = ({ userId }) => {
           )}
           {user.phone && (
             <InfoWrap>
-              <Title>Celular</Title>
-              <Info hasInfo={user.phone}>{user.phone}</Info>
+              <Title>WhatsApp</Title>
+              <Info hasInfo={user.phone}>
+                <a
+                  href={`https://api.whatsapp.com/send?phone=55${user.phone}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {user.phone}
+                </a>
+              </Info>
             </InfoWrap>
           )}
           {user.area && (

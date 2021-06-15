@@ -10,6 +10,7 @@ export const ImageWrapper = styled.div`
 export const Img = styled.img`
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 `;
 
 export const InputFile = styled.input`
