@@ -28,12 +28,12 @@ const Search = () => {
   const [query, setQuery] = useState({
     name: "",
     area: null,
-    programmingLanguages: null,
+    programmingLanguage: null,
     softwares: null,
   });
 
   const area = ["Back-end", "Front-end", "Dados", "UI/UX Design", "Outra"];
-  console.log(selectedUser);
+
   const programmingLanguages = [
     "Java",
     "Javascript",
@@ -119,10 +119,10 @@ const Search = () => {
               </InputWrapper>
               <Label>Tecnologia:</Label>
               <Autocomplete
-                value={query.programmingLanguages}
+                value={query.programmingLanguage}
                 size="small"
                 onChange={(event, newValue) => {
-                  setQuery({ ...query, programmingLanguages: newValue });
+                  setQuery({ ...query, programmingLanguage: newValue });
                 }}
                 options={programmingLanguages}
                 renderInput={(params) => (

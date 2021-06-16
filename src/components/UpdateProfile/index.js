@@ -38,11 +38,15 @@ const UpdateProfile = ({ setModal }) => {
       let softwaresList = [];
       softwaresList.push(data.softwares);
       data.softwares = softwaresList;
+    } else if (!data.softwares) {
+      data.softwares = [];
     }
     if (typeof data.programmingLanguages === "string") {
       let programmingLanguagesList = [];
       programmingLanguagesList.push(data.programmingLanguages);
       data.programmingLanguages = programmingLanguagesList;
+    } else if (!data.programmingLanguages) {
+      data.programmingLanguages = [];
     }
     let updatedUser = user;
     updatedUser = { ...updatedUser, ...data };
@@ -107,7 +111,7 @@ const UpdateProfile = ({ setModal }) => {
             <option value="Back-end">Back-end</option>
             <option value="Front-end">Front-end</option>
             <option value="Dados">Dados</option>
-            <option value="UI/UX Desig">UI/UX Design</option>
+            <option value="UI/UX Design">UI/UX Design</option>
             <option value="Outra">Outra</option>
           </Input>
         </InputWrapper>

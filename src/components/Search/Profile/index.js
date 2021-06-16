@@ -12,7 +12,6 @@ const Profile = ({ userId }) => {
     async function fetchData() {
       try {
         const result = await users.findOne(userId);
-        console.log(result);
         setUser(result);
       } catch (error) {
         console.error(error);

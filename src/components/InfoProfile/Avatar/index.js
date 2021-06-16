@@ -7,8 +7,10 @@ import defaultAvatar from "../../../assets/icons/profile.svg";
 import Modal from "../../Modal";
 import { Button } from "../../../styles/common";
 import { users } from "../../../services/api";
+import { useAuth } from "../../../contexts/auth";
 
 const Avatar = ({ photo, userId }) => {
+  const { updateUser } = useAuth();
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState(null);
 
@@ -24,11 +26,11 @@ const Avatar = ({ photo, userId }) => {
     const formData = new FormData();
 
     formData.append("file", file, file.name);
-    console.log(file);
 
     setModal(false);
 
-    await users.upload(formData, userId);
+    const user = await users.upload(formData, userId);
+    updateUser(user);
   };
 
   return (
